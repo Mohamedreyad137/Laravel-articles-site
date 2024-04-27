@@ -4,15 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Category extends Model implements HasMedia
+class Article extends Model implements HasMedia
 {
     use HasFactory , InteractsWithMedia;
 
-    protected $table = 'categories';
+    protected $table = 'articles';
 
     protected $guarded = [];
 
@@ -21,9 +22,13 @@ class Category extends Model implements HasMedia
         return $this->getMedia();
     }
 
-    public function articles(): HasMany
+    public function category(): BelongsTo
     {
-        return $this->hasMany(Article::class,'id','category_id');
+        return $this->belongsTo(Category::class,'category_id','id');
     }
 
+    public function articleDescriptions(): HasMany
+    {
+        return $this->hasMany(ArticleDescriptions::class,'id','article_id');
+    }
 }

@@ -14,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('/',CategoryController::class);
+Route::resource('category',CategoryController::class);
