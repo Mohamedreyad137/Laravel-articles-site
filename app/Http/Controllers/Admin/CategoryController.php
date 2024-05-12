@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
+use App\Imports\CategoriesImport;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CategoryController extends Controller
 {
@@ -84,5 +86,12 @@ class CategoryController extends Controller
 
         $category->delete();
         return redirect()->route('admin.category.index');
+    }
+
+    public function import() {
+
+        Excel::import(new CategoriesImport, request()->file('file'));
+
+        return redirect()->back();
     }
 }
